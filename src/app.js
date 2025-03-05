@@ -1,17 +1,25 @@
 const express = require("express");
 const app = express();
 
-app.get("/home", (req, res) => {
+app.use("/user", (req, res) => {
+  res.send("Hello from user page...");
+});
+
+app.get("/user",(req,res)=>{
+  res.send({firstname:"varshith",lastname:"kothwali"});
+});
+
+
+app.post("/user",(req,res)=>{
+  res.send("Data Succesfully saved to DB");
+});
+
+app.delete("/user",(req,res)=>{
+  res.send("Deleted Succesfully");
+});
+
+app.use("/home", (req, res) => {
   res.send("Hello from home page...");
-});
-
-app.get("/about", (req, res) => {
-  res.send("Hello from about page...");
-});
-
-// Catch-all route for undefined paths
-app.get("*", (req, res) => {
-  res.send("Hello from main page...");
 });
 
 app.listen(7777, () => {
