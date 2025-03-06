@@ -1,27 +1,27 @@
 const express = require("express");
 const app = express();
 
-// app.use("/user", (req, res) => {
-//   res.send("Hello from user page...");
-// });
+app.use("/user",[
+(req, res,next) => {
+  console.log("Handling route User 1");
+  next();
+  
+},
+(req,res,next)=>{
+  console.log("Handling route User 2");
+  
+  next();
+}],
+[(req,res,next)=>{
+  console.log("Handling route User 3");
+  next();
+},
+(req,res,next)=>{
+  console.log("Handling route User 4");
+  res.send("Route Handler 4");
+}]
+);
 
-app.get("/user/:userID/:name/:password",(req,res)=>{
-  console.log(req.params);
-  res.send({firstname:"varshith",lastname:"kothwali"});
-});
-
-
-// app.post("/user",(req,res)=>{
-//   res.send("Data Succesfully saved to DB");
-// });
-
-// app.delete("/user",(req,res)=>{
-//   res.send("Deleted Succesfully");
-// });
-
-// app.use("/home", (req, res) => {
-//   res.send("Hello from home page...");
-// });
 
 app.listen(7777, () => {
   console.log("Server is successfully listening on port 7777");
