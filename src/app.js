@@ -3,16 +3,12 @@ const connectDB=require("./config/database");
 const app = express();
 const User=require("./models/user");
 
+app.use(express.json());
+
 app.post("/signup",async(req,res)=>{
-      const userObj={
-        firstName:"Varshith",
-        lastName:"Kothwali",
-        emailid:"varshith@gmail.com",
-        password:"vars@123",
-        age:"23",
-        gender:"male"
-      };
-      const user=new User(userObj);
+     
+  
+      const user=new User(req.body);
       
       try
       {
