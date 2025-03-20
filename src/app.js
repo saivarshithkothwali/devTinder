@@ -21,6 +21,56 @@ app.post("/signup",async(req,res)=>{
       
 });
 
+// app.get("/user",async (req,res)=>{
+//   const userEmail=req.body.emailId;
+  
+//   try
+//   {
+//     const users=await User.findOne({emailId:userEmail});
+//     if(!users)
+//     {
+//       res.status(404).send("User not Found");
+//     }
+//     else{
+//       res.send(users);
+//     }
+    
+//   }
+//   catch(err){
+//       res.status(400).send("Something went wrong");
+//   }
+// });
+
+// app.get("/user",async (req,res)=>{
+//   const userEmail=req.body.emailId;
+  
+//   try
+//   {
+//     const users=await User.findOne({});
+//     if(!users.length===0)
+//     {
+//       res.status(404).send("User not Found");
+//     }
+//     else{
+//       res.send(users);
+//     }
+    
+//   }
+//   catch(err){
+//       res.status(400).send("Something went wrong");
+//   }
+// });
+
+app.get("/feed",async (req,res)=>{
+  try{
+    const users=await User.find({});
+    res.send(users);
+  }
+  catch(err){
+    res.status(400).send("Something went wrong");
+  }
+});
+
 connectDB()
   .then(()=>{
     console.log("Database connected succesfully");
