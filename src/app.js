@@ -61,14 +61,56 @@ app.post("/signup",async(req,res)=>{
 //   }
 // });
 
+// app.get("/feed",async (req,res)=>{
+//   try{
+//     const users=await User.find({});
+//     res.send(users);
+//   }
+//   catch(err){
+//     res.status(400).send("Something went wrong");
+//   }
+// });
+
 app.get("/feed",async (req,res)=>{
+  const userId=req.body.userId;
   try{
-    const users=await User.find({});
+    const users=await User.findById(userId);
     res.send(users);
   }
   catch(err){
     res.status(400).send("Something went wrong");
   }
+});
+
+app.delete("/user",async(req,res)=>{
+    const userId=req.body._id;
+    try
+    {
+      const user=await User.findByIdAndDelete({_id:userId});
+      res.send("User deleted Succesfully");
+    }
+    catch(err)
+    {
+      res.status(400).send("Something went wrong");
+    }
+});
+
+//Updte the data of the user
+app.patch("/user",async(req,res)=>{
+    const email=req.body.emailId;
+    const data=req.body;
+
+    try
+    {
+      const user=await User.findOneAndUpdate({emailId:email},data);
+      console.log(user);
+      res.send("User updated succesfully");
+    }
+    catch(err)
+    {
+      res.status(400).send("Something went wrong");
+    }
+    
 });
 
 connectDB()
