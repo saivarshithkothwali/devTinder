@@ -16,7 +16,9 @@ app.post("/signup",async(req,res)=>{
         res.send("user Added Succesfully");
       }
       catch(err){
-        res.status(400).send("Error Saving the user"+err.message);
+         
+          res.status(400).send("Error saving the user: " + err.message);
+        
       }
       
 });
@@ -95,27 +97,29 @@ app.delete("/user",async(req,res)=>{
     }
 });
 
-//Updte the data of the user
+//Update the data of the user
 app.patch("/user",async(req,res)=>{
     const email=req.body.emailId;
     const data=req.body;
 
     try
     {
-      const user=await User.findOneAndUpdate({emailId:email},data);
+      const user=await User.findOneAndUpdate({emailId:email},data,{runValidators:true});
       console.log(user);
       res.send("User updated succesfully");
     }
     catch(err)
     {
-      res.status(400).send("Something went wrong");
+      res.status(400).send("Update Failed:"+err.message);
     }
     
 });
 
 connectDB()
-  .then(()=>{
+  .then(async()=>{
     console.log("Database connected succesfully");
+
+    await User.init();
     app.listen(7777, () => {
       console.log("Server is successfully listening on port 7777");
     });
