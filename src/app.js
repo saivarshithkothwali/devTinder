@@ -6,12 +6,15 @@ const User=require("./models/user");
 app.use(express.json());
 
 app.post("/signup",async(req,res)=>{
-     
+     const data=req.body;
   
-      const user=new User(req.body);
+      const user=new User(data);
       
       try
       {
+        if(data?.skills.length>10){
+          throw new Error("skills cannot be more than 10");
+        }
         await user.save();
         res.send("user Added Succesfully");
       }
@@ -98,13 +101,28 @@ app.delete("/user",async(req,res)=>{
 });
 
 //Update the data of the user
-app.patch("/user",async(req,res)=>{
-    const email=req.body.emailId;
+app.patch("/user/:userId",async(req,res)=>{
+    const userId=req.params?.userId;
     const data=req.body;
-
+    
+    
     try
     {
-      const user=await User.findOneAndUpdate({emailId:email},data,{runValidators:true});
+
+      const ALLOWED_UPDATES=["photoUrl","about","gender","age","skills"];
+      const isUpdateAllowed=Object.keys(data).every((k)=>
+        ALLOWED_UPDATES.includes(k)
+      );
+      if(!isUpdateAllowed){
+        throw new Error("Update not allowed");
+      }
+
+      if(data?.skills.length>10){
+        throw new Error("skills cannot be more than 10");
+      }
+
+
+      const user=await User.findByIdAndUpdate({_id:userId},data,{runValidators:true});
       console.log(user);
       res.send("User updated succesfully");
     }
@@ -120,6 +138,7 @@ connectDB()
     console.log("Database connected succesfully");
 
     await User.init();
+    
     app.listen(7777, () => {
       console.log("Server is successfully listening on port 7777");
     });
