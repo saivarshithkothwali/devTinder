@@ -12,9 +12,9 @@ app.post("/signup",async(req,res)=>{
       
       try
       {
-        if(data?.skills.length>10){
-          throw new Error("skills cannot be more than 10");
-        }
+        // if(data?.skills.length>10){
+        //   throw new Error("skills cannot be more than 10");
+        // }
         await user.save();
         res.send("user Added Succesfully");
       }
