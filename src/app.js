@@ -7,6 +7,33 @@ const bcrypt=require("bcrypt");
 
 app.use(express.json());
 
+
+app.post("/login",async(req,res)=>{
+    try
+    {
+      const{emailId,password}=req.body;
+
+      const user=await User.findOne({emailId:emailId});
+      if(!user)
+      {
+        throw new Error("Invalid Credentials");
+      }
+      const isPasswordValid=await bcrypt.compare(password,user.password);
+
+      if(isPasswordValid){
+        res.send("Login Successful");
+      }
+      else{
+        throw new Error("Invalid Credentials");
+      }
+
+    }
+    catch(err)
+    {
+      res.status(400).send("ERROR: "+err.message);
+    }
+});
+
 app.post("/signup",async(req,res)=>{
      
       
@@ -37,55 +64,58 @@ app.post("/signup",async(req,res)=>{
       
 });
 
-// app.get("/user",async (req,res)=>{
-//   const userEmail=req.body.emailId;
+//Find the user by emailId
+app.get("/user",async (req,res)=>{
+  const userEmail=req.body.emailId;
   
-//   try
-//   {
-//     const users=await User.findOne({emailId:userEmail});
-//     if(!users)
-//     {
-//       res.status(404).send("User not Found");
-//     }
-//     else{
-//       res.send(users);
-//     }
+  try
+  {
+    const users=await User.findOne({emailId:userEmail});
+    if(!users)
+    {
+      res.status(404).send("User not Found");
+    }
+    else{
+      res.send(users);
+    }
     
-//   }
-//   catch(err){
-//       res.status(400).send("Something went wrong");
-//   }
-// });
+  }
+  catch(err){
+      res.status(400).send("Something went wrong");
+  }
+});
 
-// app.get("/user",async (req,res)=>{
-//   const userEmail=req.body.emailId;
+//find the users
+app.get("/user",async (req,res)=>{
+  const userEmail=req.body.emailId;
   
-//   try
-//   {
-//     const users=await User.findOne({});
-//     if(!users.length===0)
-//     {
-//       res.status(404).send("User not Found");
-//     }
-//     else{
-//       res.send(users);
-//     }
+  try
+  {
+    const users=await User.findOne({});
+    if(!users.length===0)
+    {
+      res.status(404).send("User not Found");
+    }
+    else{
+      res.send(users);
+    }
     
-//   }
-//   catch(err){
-//       res.status(400).send("Something went wrong");
-//   }
-// });
+  }
+  catch(err){
+      res.status(400).send("Something went wrong");
+  }
+});
 
-// app.get("/feed",async (req,res)=>{
-//   try{
-//     const users=await User.find({});
-//     res.send(users);
-//   }
-//   catch(err){
-//     res.status(400).send("Something went wrong");
-//   }
-// });
+
+app.get("/feed",async (req,res)=>{
+  try{
+    const users=await User.find({});
+    res.send(users);
+  }
+  catch(err){
+    res.status(400).send("Something went wrong");
+  }
+});
 
 app.get("/feed",async (req,res)=>{
   const userId=req.body.userId;
