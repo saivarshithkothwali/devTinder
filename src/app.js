@@ -6,6 +6,7 @@ const {validateSignUpData}=require("./utils/validation");
 const bcrypt=require("bcrypt");
 const cookieParser=require("cookie-parser");
 const jwt=require("jsonwebtoken");
+const {userAuth}=require("./middlewares/auth");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -73,28 +74,11 @@ app.post("/login",async(req,res)=>{
     }
 });
 
-app.get("/profile",async(req,res)=>{
+app.get("/profile",userAuth,async(req,res)=>{
   
   try
   {
-    const cookies=req.cookies;
-
-    const {token}=cookies;
-    if(!token)
-    {
-      throw new Error("Invalid token");
-    }
-    const decodedMessage=await jwt.verify(token,"DEV@Tinder$790");
-    
-    const {_id}=decodedMessage;
-    
-    
-  
-    const user=await User.findById(_id);
-    if(!user)
-    {
-      throw new Error("User doesnot exist");
-    }
+    const user= req.user;
     res.send(user);
   }
   catch(err)
@@ -103,118 +87,6 @@ app.get("/profile",async(req,res)=>{
   }
   
   
-});
-
-
-
-//Find the user by emailId
-app.get("/user",async (req,res)=>{
-  const userEmail=req.body.emailId;
-  
-  try
-  {
-    const users=await User.findOne({emailId:userEmail});
-    if(!users)
-    {
-      res.status(404).send("User not Found");
-    }
-    else{
-      res.send(users);
-    }
-    
-  }
-  catch(err){
-      res.status(400).send("Something went wrong");
-  }
-});
-
-//find the users
-app.get("/user",async (req,res)=>{
-  const userEmail=req.body.emailId;
-  
-  try
-  {
-    const users=await User.findOne({});
-    if(!users.length===0)
-    {
-      res.status(404).send("User not Found");
-    }
-    else{
-      res.send(users);
-    }
-    
-  }
-  catch(err){
-      res.status(400).send("Something went wrong");
-  }
-});
-
-
-app.get("/feed",async (req,res)=>{
-  try{
-    const users=await User.find({});
-    res.send(users);
-  }
-  catch(err){
-    res.status(400).send("Something went wrong");
-  }
-});
-
-app.get("/feed",async (req,res)=>{
-  const userId=req.body.userId;
-  try{
-    const users=await User.findById(userId);
-    res.send(users);
-  }
-  catch(err){
-    res.status(400).send("Something went wrong");
-  }
-});
-
-app.delete("/user",async(req,res)=>{
-    const userId=req.body._id;
-    try
-    {
-      const user=await User.findByIdAndDelete({_id:userId});
-      res.send("User deleted Succesfully");
-    }
-    catch(err)
-    {
-      res.status(400).send("Something went wrong");
-    }
-});
-
-//Update the data of the user
-app.patch("/user/:userId",async(req,res)=>{
-    const userId=req.params?.userId;
-    const data=req.body;
-    
-    
-    try
-    {
-
-      const ALLOWED_UPDATES=["photoUrl","about","gender","age","skills"];
-      const isUpdateAllowed=Object.keys(data).every((k)=>
-        ALLOWED_UPDATES.includes(k)
-      );
-      if(!isUpdateAllowed){
-        throw new Error("Update not allowed");
-      }
-
-      if(data?.skills.length>10){
-        throw new Error("skills cannot be more than 10");
-      }
-
-
-      const user=await User.findByIdAndUpdate({_id:userId},data,{runValidators:true});
-      console.log(user);
-      res.send("User updated succesfully");
-    }
-    catch(err)
-    {
-      res.status(400).send("Update Failed:"+err.message);
-    }
-    
 });
 
 connectDB()
