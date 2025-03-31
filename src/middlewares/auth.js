@@ -1,25 +1,11 @@
-const adminAuth=(req,res,next)=>{
-  console.log("Admin auth is getting checked");
-  const token="xyz";
-  const isAdminAuthorized=token==="xyz";
-  if(!isAdminAuthorized){
-    res.status(401).send("Unauthorized Request");
-  }
-  else{
-    next();
-  }
-};
+const jwt=require("jsonwebtoken");
 
-const userAuth=(req,res,next)=>{
-  console.log("User auth is getting checked");
-  const token="abc";
-  const isuserAuthorized=token==="abc";
-  if(!isuserAuthorized){
-    res.status(401).send("Unauthorized Request");
-  }
-  else{
-    next();
-  }
+const userAuth=async(req,res,next)=>{
+  //Read the token from request cookies
+  const cookies=req.cookies;
+  const {token}=cookies;
+
+  const decodedObj=await jwt.verify(token,"DEV@Tinder$790");
 };
 
 module.exports={adminAuth,userAuth};
