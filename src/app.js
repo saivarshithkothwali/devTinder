@@ -59,7 +59,7 @@ app.post("/login",async(req,res)=>{
         const token=await jwt.sign({_id:user._id},"DEV@Tinder$790"); 
         
         //Add the JWT Token to cookie and send the response back to the user
-        res.cookie("token",token);
+        res.cookie("token",token,{ maxAge: 900000});
         res.send("Login Successful");
       }
       else
@@ -87,6 +87,14 @@ app.get("/profile",userAuth,async(req,res)=>{
   }
   
   
+});
+
+app.get("/sendConnectionRequest",userAuth,async(req,res)=>{
+  const user=req.user;
+  //Sending a connection Request
+  console.log("Sending a connection Request");
+
+  res.send(user.firstName+ " sent the connection Request");
 });
 
 connectDB()
