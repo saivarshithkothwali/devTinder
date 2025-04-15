@@ -54,7 +54,7 @@ authRouter.post("/login",async(req,res)=>{
       
       //Add the JWT Token to cookie and send the response back to the user
       res.cookie("token",token,{ maxAge: 24 * 60 * 60 * 1000,});
-      res.send("Login Successful");
+      res.send(user);
     }
     else
     {
