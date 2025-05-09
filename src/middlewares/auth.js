@@ -14,7 +14,7 @@ const userAuth=async(req,res,next)=>{
     }
 
     //Validate the token  
-    const decodedObj=await jwt.verify(token,"DEV@Tinder$790");
+    const decodedObj=await jwt.verify(token,process.env.JWT_SECRET);
     
     //Extract the _id from decodedObj(This is object destructuring)
     const {_id}=decodedObj;
