@@ -8,7 +8,7 @@ const sesClient = new SESClient({
     accessKeyId: process.env.AWS_SES_Access_Key,
     secretAccessKey: process.env.AWS_SES_Secret_Access_Key,
 
-  }
+  },
 
 });
 module.exports= { sesClient };
