@@ -3,7 +3,7 @@ const requestRouter=express.Router();
 const {userAuth}=require("../middlewares/auth");
 const ConnectionRequest=require("../models/connectionRequest");
 const User = require("../models/user");
-const {sendEmail}=require("../utils/sendEmail");
+const { run: sendEmail } = require("../utils/sendEmail");
 
 requestRouter.post("/request/send/:status/:toUserId",userAuth,async(req,res)=>{
   
@@ -56,8 +56,15 @@ requestRouter.post("/request/send/:status/:toUserId",userAuth,async(req,res)=>{
 
       const data=await connectionRequest.save();
 
-      const emailRes=await sendEmail.run("A new friend request from" +req.user.firstName,+req.user.firstName+ " is " +status+ " in " +toUser.firstName);
-      console.log(emailRes);
+      
+
+      await sendEmail({
+        to: "kothwalisaivarshith@gmail.com",
+        subject: "New Connection Request",
+        body: `${req.user.firstName} is ${status} in connecting with ${toUser.firstName} on DevConnect.`,
+      });
+      
+
 
       res.json({
         message:req.user.firstName+ " is " +status+ " in " +toUser.firstName,

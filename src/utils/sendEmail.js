@@ -15,7 +15,7 @@ const createSendEmailCommand = (toAddress, fromAddress,subject,body) => {
         },
         Text: {
           Charset: "UTF-8",
-          Data: "This is text format email",
+          Data: body,
         },
       },
       Subject: {
@@ -25,32 +25,25 @@ const createSendEmailCommand = (toAddress, fromAddress,subject,body) => {
     },
     Source: fromAddress,
     ReplyToAddresses: [
-      /* more items */
-    ],
+],
   });
 };
 
-const run = async (subject,body,toEmailId) => {
-  console.log(`Sending email to: ${toEmailId}`);
-  const sendEmailCommand = createSendEmailCommand(
-    toEmailId,
-    "varshith@thedevconnect.in",
-    subject,
-    body
-  );
+const run = async ({ to, subject, body }) => {
+  const from = "varshith@thedevconnect.in"; // your verified email
+  const sendEmailCommand = createSendEmailCommand(to, from, subject, body);
 
   try {
     return await sesClient.send(sendEmailCommand);
-  } catch (caught) {
-    console.error("SES Email Error:", caught);
-    if (caught instanceof Error && caught.name === "MessageRejected") {
-      
-      const messageRejectedError = caught;
-      return messageRejectedError;
+  } catch (err) {
+    console.error("SES Email Error:", err);
+    if (err instanceof Error && err.name === "MessageRejected") {
+      return err;
     }
-    throw caught;
+    throw err;
   }
 };
+
 
 // snippet-end:[ses.JavaScript.email.sendEmailV3]
 module.exports= { run };
