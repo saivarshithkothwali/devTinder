@@ -9,8 +9,9 @@ require('dotenv').config();
 
 require("./utils/cronjob");
 
-app.use(cors({
-  origin: ["http://localhost:5173", "https://thedevconnect.in"],
+app.use(
+  cors({
+  origin: "http://localhost:5173",
   credentials: true,
 }));
 
