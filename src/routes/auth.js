@@ -30,7 +30,12 @@ authRouter.post("/signup",async(req,res)=>{
     const token=await savedUser.getJWT(); 
       
     //Add the JWT Token to cookie and send the response back to the user
-    res.cookie("token",token,{ maxAge: 24 * 60 * 60 * 1000,});
+    res.cookie("token",token,{ 
+      httpOnly: true,
+      secure: true,
+      sameSite: "None", 
+      maxAge: 24 * 60 * 60 * 1000,
+    });
     res.json({message:"user Added Succesfully",data:savedUser});
   }
   catch(err){
@@ -59,7 +64,11 @@ authRouter.post("/login",async(req,res)=>{
       const token=await user.getJWT(); 
       
       //Add the JWT Token to cookie and send the response back to the user
-      res.cookie("token",token,{ maxAge: 24 * 60 * 60 * 1000,});
+      res.cookie("token",token,{ 
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 24 * 60 * 60 * 1000,});
       res.send(user);
     }
     else
@@ -76,6 +85,9 @@ authRouter.post("/login",async(req,res)=>{
 
 authRouter.post("/logout",async (req,res)=>{
   res.cookie("token",null,{
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
       expires: new Date(Date.now()),
   });
   res.send("Logout Successful");
