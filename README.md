@@ -145,10 +145,16 @@ Deployment & Cloud Services:
   - Prevented application crashes by gracefully handling unexpected failures
   - Returned meaningful error responses to the client
   - Improved application stability and debuggability during API execution
+  
 
 12. Database, Schema and Mongoose ODM
   - Created a MongoDB Atlas cluster to host the database in the cloud
   - Used MongoDB Compass to view and inspect data stored in MongoDB Atlas
   - Used Mongoose (ODM) to model data and interact with MongoDB from the Node.js application
   - Established a database connection before starting the server to ensure the application only listens for requests after successful database connectivity
+  - Implemented a "/signup" API using the HTTP "POST" method to create new users
+  - Used the Mongoose "User" model to interact with the "users" collection
+  - Created a new instance of the "User" model with request data
+  - Persisted the user document to the database using model instance methods
+
 
