@@ -53,3 +53,102 @@ Deployment & Cloud Services:
 -> AWS EC2 for hosting the application
 
 -> Amazon SES for handling email services
+
+
+## Learning Progress & Backend Concepts Covered
+
+1. Project Initialization & Server Setup
+  - Initialized a Node.js project using `npm init`
+  - Understood the role of `package.json` in managing:
+    - Project metadata
+    - Scripts
+    - Dependencies and devDependencies
+  - Created a structured project layout using a `src` directory
+  - Configured `app.js` as the application entry point
+  - Set up an Express server to listen for incoming HTTP requests
+
+
+2. Express Server Lifecycle
+  - Imported and instantiated the Express application
+  - Started the server using `app.listen()` on port `7777`
+  - Verified server startup using browser and console logs
+  - Understood the role of the `app.listen()` callback
+
+3. Development Workflow
+  - Installed and used Nodemon to automatically restart the server during development
+  - Improved development efficiency by eliminating manual restarts
+
+
+4. REST API Development & Testing
+  - Implemented RESTful APIs using standard HTTP methods:
+    - GET, POST, PUT, PATCH, DELETE
+  - Tested and validated API requests and responses using Postman
+  - Understood request–response lifecycle in Express
+
+ 
+5. Routing & Request Handling
+  - Implemented Express routing for handling client requests
+  - Learned the difference between:
+    - Route (Path) Parameters using `req.params`
+    - Query Parameters using `req.query`
+  - Understood when to use:
+    - Route parameters for resource identification
+    - Query parameters for filtering and optional data
+
+
+6. Routing, Route Handlers, and Middleware
+  - Learned the concept of routing in Express using `app.get()`, `app.post()`, `app.put()`, `app.patch()`, and `app.delete()`
+  - Understood the role of route handlers in processing incoming requests and sending responses
+  - Differentiated between:
+    - Routes (URL paths)
+    - Route handlers (request-processing logic)
+    - Middleware functions (pre-processing logic)
+  - Used multiple route handlers for a single route to modularize request processing
+  - Applied middleware chaining by wrapping multiple middleware functions in arrays for cleaner and reusable route definitions
+
+
+7. Middleware and the `next()` Function
+  - Implemented custom middleware functions for request processing
+  - Learned when and why to use the `next()` function to:
+    - Pass control to the next middleware
+    - Continue request execution flow
+  - Understood middleware execution order and request lifecycle in Express
+
+
+8. Authorization and Access Control
+  - Implemented authorization logic to restrict access to routes
+  - Differentiated user roles such as:
+    - User
+    - Admin
+  - Protected routes based on role and authentication status
+
+
+9. Route-Level Authorization
+  - Applied middleware selectively to routes such as:
+    - Login
+    - Fetching protected data
+    - Deleting sensitive data
+  - Ensured that only authorized users can access or modify protected resources
+  - Prevented unauthorized access by validating permissions before executing route handlers
+
+
+10. Role-Based Authentication Functions
+  - Created separate authentication functions for different user roles:
+    - User authentication
+    - Admin authentication
+  - Centralized authentication logic to ensure reusability and consistency
+  - Applied role-specific authentication middleware to protect routes based on access level
+  - Ensured that only authorized users can perform privileged operations
+
+11. Error Handling Using Try-Catch
+  - Implemented `try-catch` blocks to handle runtime and asynchronous errors
+  - Prevented application crashes by gracefully handling unexpected failures
+  - Returned meaningful error responses to the client
+  - Improved application stability and debuggability during API execution
+
+12. Database, Schema and Mongoose ODM
+  - Created a MongoDB Atlas cluster to host the database in the cloud
+  - Used MongoDB Compass to view and inspect data stored in MongoDB Atlas
+  - Used Mongoose (ODM) to model data and interact with MongoDB from the Node.js application
+  - Established a database connection before starting the server to ensure the application only listens for requests after successful database connectivity
+
