@@ -157,4 +157,14 @@ Deployment & Cloud Services:
   - Created a new instance of the "User" model with request data
   - Persisted the user document to the database using model instance methods
 
+13. Core Backend Concepts Strengthened
+  -JSON vs JavaScript objects
+  -Role of express.json() middleware
+  -Difference between PUT and PATCH
+  -findById vs findOne methods
+  -Proper CRUD abstraction
+  -Clean REST API design principles
+  -Understanding and using Mongoose model methods:
+   create(), save(), find(), findById(), findOne(), findByIdAndUpdate(), findOneAndUpdate(), findByIdAndDelete(), deleteOne().
+
 
