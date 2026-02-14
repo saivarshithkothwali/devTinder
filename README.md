@@ -167,4 +167,42 @@ Deployment & Cloud Services:
   -Understanding and using Mongoose model methods:
    create(), save(), find(), findById(), findOne(), findByIdAndUpdate(), findOneAndUpdate(), findByIdAndDelete(), deleteOne().
 
+14. Data Modeling & Schema Design (Mongoose)
+   - Designed data models using Mongoose schemas
+   - Used core schema types:
+     - String
+     - Number
+     - Array
+   - Enabled automatic timestamps (`createdAt`, `updatedAt`) for audit and tracking
+
+15. Data Validation & Sanitization
+   - Enforced schema-level validations to maintain data integrity
+   - Applied:
+     - Required field validation
+     - Length and value constraints
+   - Implemented input sanitization:
+     - Lowercasing emails
+     - Trimming whitespace
+     - Default values for optional fields
+
+16. Custom Schema-Level Validation
+   - Implemented custom validators using the `validator` library:
+     - Email format validation
+     - Strong password enforcement
+     - URL validation for profile images
+     - Enum-based validation for controlled fields like gender
+   - Added meaningful error messages for validation failures
+
+17. Validation During Updates
+   - Enforced validation during update operations using `runValidators: true`
+   - Prevented invalid data from bypassing schema rules during updates
+
+18. API-Level Update Control
+   - Implemented field whitelisting for profile updates
+   - Allowed updates only for non-sensitive fields such as:
+     - firstName, lastName, photoUrl, gender, age, about, skills
+   - Restricted updates to sensitive fields like email and password
+   - Prevented mass assignment vulnerabilities
+
+
 
