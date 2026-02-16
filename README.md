@@ -204,5 +204,31 @@ Deployment & Cloud Services:
    - Restricted updates to sensitive fields like email and password
    - Prevented mass assignment vulnerabilities
 
+19. Authentication APIs Implemented
+
+### Signup
+
+   - Created `/signup` endpoint
+   - Added request-level validation for required fields
+   - Enforced schema validation for data integrity
+   - Hashed passwords using **bcrypt** before storing
+   - Handled duplicate email & validation errors properly
+
+### Login
+
+   - Created `/login` endpoint
+   - Validated credentials securely (generic error messages)
+   - Fetched user by emailId
+   - Verified password using **bcrypt.compare**
+   - Returned proper status codes (401 for invalid, 200 for success)
+
+### Key Learnings
+
+   - API validation vs Schema validation (defense-in-depth)
+   - Secure password storage & comparison
+   - Preventing user enumeration attacks
+   - Proper REST error handling
+
+
 
 
