@@ -1,25 +1,30 @@
 # DevTinder API's
- 
+
 ## authRouter
+
 -POST /signup
 -POST /login
 -POST /logout
 
 ## profileRouter
+
 -GET profile/view
 -PATCH profile/edit
 -PATCH profile/password
 
 ## connectionRequestRouter
+
 POST /request/send/:status/:userId
 POST /request/review/:status/:userId
 
 ## userRouter
+
 GET /user/requests/received
 GET /user/connections
 GET /user/feed -gets you the profiles of the users on the platform
 
 ## Terms and Conditions
+
 Last updated on May 12 2025
 
 For the purpose of these Terms and Conditions, The term "we", "us", "our" used anywhere on this page shall mean SAI VARSHITH KOTHWALI, whose registered/operational office is 2-6-1305/1,Bhavani Nagar, Hanamkonda Warangal TELANGANA 506001 . "you", “your”, "user", “visitor” shall mean any natural or legal person who is visiting our website and/or agreed to purchase from us.
@@ -47,6 +52,7 @@ Any dispute arising out of use of our website and/or purchase with us and/or any
 We, shall be under no liability whatsoever in respect of any loss or damage arising directly or indirectly out of the decline of authorization for any Transaction, on Account of the Cardholder having exceeded the preset limit mutually agreed by us with our acquiring bank from time to time
 
 ## Cancellation and Refund
+
 Last updated on May 12 2025
 
 SAI VARSHITH KOTHWALI believes in helping its customers as far as possible, and has therefore a liberal cancellation policy. Under this policy:
@@ -64,11 +70,13 @@ In case of complaints regarding products that come with a warranty from manufact
 In case of any Refunds approved by the SAI VARSHITH KOTHWALI, it’ll take 7 days for the refund to be processed to the end customer.
 
 ## Shipping and Delivery
+
 Last updated on May 12 2025
 
 Shipping is not applicable for business.
 
 ## Privacy Policy
+
 Last updated on May 12 2025
 
 This privacy policy sets out how SAI VARSHITH KOTHWALI uses and protects any information that you give SAI VARSHITH KOTHWALI when you visit their website and/or agree to purchase from them.
@@ -124,6 +132,7 @@ We will not sell, distribute or lease your personal information to third parties
 If you believe that any information we are holding on you is incorrect or incomplete, please write to 2-6-1305/1,Bhavani Nagar, Hanamkonda Warangal TELANGANA 506001 . or contact us at 7330939696 or saivarshith733@gmail.com as soon as possible. We will promptly correct any information found to be incorrect.
 
 ## Contact Us
+
 Last updated on May 12 2025
 
 You may contact us using the information below:
