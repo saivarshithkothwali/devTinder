@@ -238,6 +238,9 @@ Deployment & Cloud Services:
    - Implemented `userAuth` middleware to verify JWT from cookies
    - Allowed access to protected routes only for authenticated users
    - Handled invalid, missing, and expired tokens with proper responses
+   - Implemented Mongoose schema instance methods to encapsulate authentication logic inside the User model.
+   -Added validatePassword() to securely compare user input with the stored bcrypt hash.
+   -Added getJWT() to generate signed JWT tokens with expiration.
 
 
 
