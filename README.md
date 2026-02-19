@@ -229,6 +229,17 @@ Deployment & Cloud Services:
    - Preventing user enumeration attacks
    - Proper REST error handling
 
+20. JWT Authentication Implemented
+
+   - Installed **jsonwebtoken** and generated JWT token on login
+   - Installed **cookie-parser** and stored token in HTTP cookies
+   - Sent authentication cookie to client after successful login
+   - Created protected `/profile` API
+   - Implemented `userAuth` middleware to verify JWT from cookies
+   - Allowed access to protected routes only for authenticated users
+   - Handled invalid, missing, and expired tokens with proper responses
+
+
 
 
 
