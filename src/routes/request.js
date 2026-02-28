@@ -4,6 +4,7 @@ const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
 const User = require("../models/user");
 const { run: sendEmail } = require("../utils/sendEmail");
+const mongoose = require("mongoose");
 
 requestRouter.post(
   "/request/send/:status/:toUserId",
@@ -13,6 +14,14 @@ requestRouter.post(
       const fromUserId = req.user._id;
       const toUserId = req.params.toUserId;
       const status = req.params.status;
+
+      // Validate ObjectId format
+      if (!mongoose.Types.ObjectId.isValid(toUserId)) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid user ID",
+        });
+      }
 
       //Validation for checking whether a user is sending a connection request to himself.
       if (fromUserId.equals(toUserId)) {
@@ -25,16 +34,19 @@ requestRouter.post(
       //Sending only the allowed status types(Validation3)
       const allowedStatus = ["ignored", "interested"];
       if (!allowedStatus.includes(status)) {
-        return res
-          .status(400)
-          .json({ message: "Invalid Status Type: " + status });
+        return res.status(400).json({
+          success: false,
+          error: `Status must be one of: ${allowedStatus.join(", ")}`,
+        });
       }
 
       //Can send the conenction request to only the users present in DB collection(Validation2)
       const toUser = await User.findById(toUserId);
 
       if (!toUser) {
-        return res.status(404).json({ message: "User not Found" });
+        return res
+          .status(404)
+          .json({ success: false, error: "User not Found" });
       }
 
       //If there is an existing ConnectionRequest(Validation1)
@@ -47,8 +59,8 @@ requestRouter.post(
 
       if (existingConnectionRequest) {
         return res
-          .status(400)
-          .send({ message: "Connection Request already exists" });
+          .status(409)
+          .json({ success: false, error: "Connection request already exists" });
       }
 
       //Creating a new connection request
@@ -66,13 +78,18 @@ requestRouter.post(
         body: `${req.user.firstName} is ${status} in connecting with ${toUser.firstName} on DevConnect.`,
       });
 
-      res.json({
-        message:
-          req.user.firstName + " is " + status + " in " + toUser.firstName,
+      return res.status(201).json({
+        success: true,
+        message: "Connection request sent successfully",
         data,
       });
     } catch (err) {
-      res.status(400).send("ERROR: " + err.message);
+      console.error("Error in sending connection request:", err);
+
+      return res.status(500).json({
+        success: false,
+        error: "Internal Server Error",
+      });
     }
   },
 );
