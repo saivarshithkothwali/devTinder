@@ -104,25 +104,39 @@ requestRouter.post(
 
       const allowedStatus = ["accepted", "rejected"];
       if (!allowedStatus.includes(status)) {
-        return res.status(400).json({ message: "Status not allowed" });
+        return res.status(400).json({
+          success: false,
+          error: `Status must be one of: ${allowedStatus.join(", ")}`,
+        });
       }
+
+      if (!mongoose.Types.ObjectId.isValid(requestId)) {
+        return res
+          .status(400)
+          .json({ success: false, error: "Invalid request ID" });
+      }
+
       const connectionRequest = await ConnectionRequest.findOne({
         _id: requestId,
         toUserId: loggedInUser._id,
         status: "interested",
       });
       if (!connectionRequest) {
-        return res
-          .status(404)
-          .json({ message: "Connection request not found" });
+        return res.status(404).json({
+          success: false,
+          error: "Connection request not found or already reviewed",
+        });
       }
       connectionRequest.status = status;
 
       const data = await connectionRequest.save();
 
-      res.json({ message: "Connection request " + status, data });
+      res
+        .status(200)
+        .json({ success: true, message: `Connection request ${status}`, data });
     } catch (err) {
-      res.status(400).send("ERROR: " + err.message);
+      console.error("Error reviewing connection request:", err);
+      res.status(500).json({ success: false, error: "Internal Server Error" });
     }
   },
 );
