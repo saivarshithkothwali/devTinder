@@ -241,8 +241,15 @@ Deployment & Cloud Services:
    - Implemented Mongoose schema instance methods to encapsulate authentication logic inside the User model.
    -Added validatePassword() to securely compare user input with the stored bcrypt hash.
    -Added getJWT() to generate signed JWT tokens with expiration.
+   -Implemented route modularization using express.Router, separating APIs into dedicated route files (auth, profile,            request) to improve code structure, readability, and scalability.
 
+22. Implemented a Connection Request API with:
 
+   -Compound indexing for optimized duplicate detection
+   -Mongoose pre("save") middleware for schema-level validation
+   -Proper HTTP status codes (400, 404, 409, 500)
+   -Edge case handling (self-request, invalid ObjectId, duplicate requests)
+   -Structured and consistent error responses
 
 
 
