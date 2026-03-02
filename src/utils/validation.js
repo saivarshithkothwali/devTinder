@@ -14,6 +14,16 @@ const validateSignUpData = (req) => {
   }
 };
 
+const validateLoginData = (req) => {
+  const { emailId, password } = req.body;
+
+  if (!emailId || !password) {
+    return "Email and password are required";
+  } else if (!validator.isEmail(emailId)) {
+    return "Invalid email format";
+  }
+};
+
 const validateEditProfileData = (req) => {
   const allowedEditFields = [
     "firstName",
@@ -30,4 +40,8 @@ const validateEditProfileData = (req) => {
   );
   return isEditAllowed;
 };
-module.exports = { validateSignUpData, validateEditProfileData };
+module.exports = {
+  validateSignUpData,
+  validateLoginData,
+  validateEditProfileData,
+};

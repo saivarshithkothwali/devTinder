@@ -21,7 +21,7 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
       data: connectionRequests,
     });
   } catch (err) {
-    console.error("Error reviewing connection request:", err);
+    console.error("Error reviewing connection requests received:", err);
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 });
@@ -52,6 +52,7 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
     });
     res.status(200).json({ success: true, data });
   } catch (err) {
+    console.log("Error viewing connections: " + err);
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 });
