@@ -60,9 +60,9 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
 userRouter.get("/user/feed", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
-    const page = parseInt(req.query.page) || 1;
-    let limit = parseInt(req.query.limit) || 10;
-    limit = limit > 50 ? 50 : limit;
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    let limit = Math.max(parseInt(req.query.limit) || 10, 1);
+    limit = Math.min(limit, 50);
     const skip = (page - 1) * limit;
 
     const connectionRequests = await ConnectionRequest.find({
@@ -71,23 +71,26 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
 
     const hideUsersFromFeed = new Set();
     connectionRequests.forEach((req) => {
-      (hideUsersFromFeed.add(req.fromUserId.toString()),
-        hideUsersFromFeed.add(req.toUserId.toString()));
+      if (req.fromUserId.toString() === loggedInUser._id.toString()) {
+        hideUsersFromFeed.add(req.toUserId.toString());
+      } else {
+        hideUsersFromFeed.add(req.fromUserId.toString());
+      }
     });
 
     const users = await User.find({
-      $and: [
-        { _id: { $nin: Array.from(hideUsersFromFeed) } },
-        { _id: { $ne: loggedInUser } },
-      ],
+      _id: {
+        $nin: [...hideUsersFromFeed, loggedInUser._id],
+      },
     })
       .select(USER_SAFE_DATA)
       .skip(skip)
       .limit(limit);
 
-    res.json({ data: users });
+    res.status(200).json({ success: true, data: users });
   } catch (err) {
-    res.status(400).send("ERROR: " + err.message);
+    console.log("Error viewing the feed: " + err);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 });
 module.exports = userRouter;
