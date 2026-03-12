@@ -72,11 +72,13 @@ requestRouter.post(
 
       const data = await connectionRequest.save();
 
-      await sendEmail({
-        to: "kothwalisaivarshith@gmail.com",
-        subject: "New Connection Request",
-        body: `${req.user.firstName} is ${status} in connecting with ${toUser.firstName} on DevConnect.`,
-      });
+      if (status === "interested") {
+        await sendEmail({
+          to: "kothwalisaivarshith@gmail.com",
+          subject: "New Connection Request",
+          body: `${req.user.firstName} ${req.user.lastName} is interested in connecting with you on DevConnect.`,
+        });
+      }
 
       return res.status(201).json({
         success: true,
