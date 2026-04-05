@@ -273,6 +273,10 @@ Deployment & Cloud Services:
 - Data Sanitization
    -Only safe user fields are returned using USER_SAFE_DATA
    -Prevents exposure of sensitive information
+   -Prevents loading lakhs of users at once, reducing:
+      - Response time
+      - Memory usage
+      - Database load
 
 
 
