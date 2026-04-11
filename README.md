@@ -257,7 +257,26 @@ Deployment & Cloud Services:
    - GET `/user/connections`
    - Implemented secure validation and authorization checks
    - Used Mongoose `ref` and `populate` for relational querying
-   - Applied proper HTTP status codes and structured API responses 
+   - Applied proper HTTP status codes and structured API responses
+
+24. Implemented a paginated user feed API that intelligently filters and returns relevant profiles for connection.
+
+-Excludes irrelevant users from feed
+   -Logged-in user (self)
+   -Existing connections
+   -Users already sent connection requests
+   -Users who ignored/rejected requests
+-Pagination Support
+   -Efficient data fetching using page and limit
+   -Default limit: 10 users
+   -Max limit capped at 50 (prevents abuse)
+- Data Sanitization
+   -Only safe user fields are returned using USER_SAFE_DATA
+   -Prevents exposure of sensitive information
+   -Prevents loading lakhs of users at once, reducing:
+      - Response time
+      - Memory usage
+      - Database load
 
 
 
